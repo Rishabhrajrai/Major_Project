@@ -116,9 +116,9 @@ app.use("/", userRouter);
 
 
 
-app.all("/{*splat}",(req,res,next) => {
-    next(new ExpressError(404,"Page Not found"));
-});
+// app.all("/{*splat}",(req,res,next) => {
+//     next(new ExpressError(404,"Page Not found"));
+// });
 
 // app.use((err,req,res,next)=>{
 //    let {statusCode= 500,message= "Spmething went wrong"} = err;
@@ -139,6 +139,10 @@ app.all("/{*splat}",(req,res,next) => {
 //    res.status(statusCode).render("error.ejs",{message});
 // });
 
+app.all("/{*splat}", (req,res,next) => {
+    console.log("404 REQUEST:", req.method, req.originalUrl);
+    next(new ExpressError(404,"Page Not found"));
+});
 
 app.use((err, req, res, next) => {
     console.error("REAL ERROR:", err);
